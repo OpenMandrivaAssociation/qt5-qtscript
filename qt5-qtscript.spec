@@ -19,7 +19,7 @@
 
 Name:		qt5-qtscript
 Version:	%{qtversion}
-Release:	1
+Release:	2
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
@@ -35,10 +35,9 @@ scriptable.
 
 #------------------------------------------------------------------------------
 
-%package -n %{qtscripttools}
-Summary: Qt%{api} Component Library
-Group: System/Libraries
-Provides: qtscripttoolslib = %{version}
+%package -n	%{qtscripttools}
+Summary:	Qt%{api} Component Library
+Group:		System/Libraries
 
 %description -n %{qtscripttools}
 Qt%{api} Component Library.
@@ -46,21 +45,21 @@ Qt%{api} Component Library.
 The QtScriptTools module provides additional components for applications
 that use Qt Script.
 
-%files -n %{qtscripttools}
+%files -n	%{qtscripttools}
 %{_qt5_libdir}/libQt5ScriptTools.so.%{api}*
 
 #------------------------------------------------------------------------------
 
-%package -n %{qtscripttoolsd}
-Summary: Devel files needed to build apps based on QtScriptTools
-Group:    Development/KDE and Qt
-Requires: %{qtscripttools} = %version
-Requires: qt5-qtbase-devel = %version
+%package -n	%{qtscripttoolsd}
+Summary:	Devel files needed to build apps based on QtScriptTools
+Group:		Development/KDE and Qt
+Requires:	%{qtscripttools} = %version
+Requires:	qt5-qtbase-devel = %version
 
 %description -n %{qtscripttoolsd}
 Devel files needed to build apps based on QtScriptTools.
 
-%files -n %{qtscripttoolsd}
+%files -n	%{qtscripttoolsd}
 %{_qt5_libdir}/libQt5ScriptTools.prl
 %{_qt5_libdir}/libQt5ScriptTools.so
 %{_qt5_libdir}/pkgconfig/Qt5ScriptTools.pc
@@ -80,16 +79,15 @@ Provides:	qt5-qtscripttools-private-devel = %version
 %description -n %{qtscripttools_p_d}
 Devel files needed to build apps based on QtScriptTools.
 
-%files -n %{qtscripttools_p_d}
+%files -n	%{qtscripttools_p_d}
 %{_qt5_includedir}/QtScriptTools/%qtversion
 %{_qt5_prefix}/mkspecs/modules/qt_lib_scripttools_private.pri
 
 #------------------------------------------------------------------------------
 
-%package -n %{qtscript}
-Summary: Qt%{api} Component Library
-Group: System/Libraries
-Provides: qtscript = %{version}
+%package -n	%{qtscript}
+Summary:	Qt%{api} Component Library
+Group:		System/Libraries
 
 %description -n %{qtscript}
 Qt%{api} Component Library.
@@ -97,21 +95,21 @@ Qt%{api} Component Library.
 The QtScript module provides classes for making Qt applications 
 scriptable.
 
-%files -n %{qtscript}
+%files -n	%{qtscript}
 %{_qt5_libdir}/libQt5Script.so.%{api}*
 
 #------------------------------------------------------------------------------
 
-%package -n %{qtscriptd}
-Summary: Devel files needed to build apps based on QtScript
-Group:    Development/KDE and Qt
-Requires: %{qtscript} = %version
-Requires: qt5-qtbase-devel = %version
+%package -n	%{qtscriptd}
+Summary:	Devel files needed to build apps based on QtScript
+Group:		Development/KDE and Qt
+Requires:	%{qtscript} = %version
+Requires:	qt5-qtbase-devel = %version
 
 %description -n %{qtscriptd}
 Devel files needed to build apps based on QtScript.
 
-%files -n %{qtscriptd}
+%files -n	%{qtscriptd}
 %{_qt5_libdir}/libQt5Script.prl
 %{_qt5_libdir}/libQt5Script.so
 %{_qt5_libdir}/pkgconfig/Qt5Script.pc
@@ -157,11 +155,11 @@ Devel files needed to build apps based on QtScript.
 
 #------------------------------------------------------------------------------
 
-%package -n %{qtscript_p_d}
-Summary: Devel files needed to build apps based on QtScript
-Group:    Development/KDE and Qt
-Requires: %{qtscriptd} = %version
-Provides: qt5-qtscript-private-devel = %version
+%package -n	%{qtscript_p_d}
+Summary:	Devel files needed to build apps based on QtScript
+Group:		Development/KDE and Qt
+Requires:	%{qtscriptd} = %version
+Provides:	qt5-qtscript-private-devel = %version
 
 %description -n %{qtscript_p_d}
 Devel files needed to build apps based on QtScript.
@@ -172,6 +170,7 @@ Devel files needed to build apps based on QtScript.
 %dir %{_qt5_includedir}/QtScript/%qtversion/QtScript/private
 %{_qt5_includedir}/QtScript/%qtversion/QtScript/private/*.h
 %{_qt5_prefix}/mkspecs/modules/qt_lib_script_private.pri
+
 
 %prep
 %setup -q -n %qttarballdir
@@ -184,12 +183,19 @@ Devel files needed to build apps based on QtScript.
 %install
 %makeinstall_std INSTALL_ROOT=%{buildroot}
 
-install -d %{buildroot}/%{_qt5_docdir}
+## .prl/.la file love
+# nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
+pushd %{buildroot}%{_qt5_libdir}
+for prl_file in libQt5*.prl ; do
+  sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" ${prl_file}
+  if [ -f "$(basename ${prl_file} .prl).so" ]; then
+    rm -fv "$(basename ${prl_file} .prl).la"
+    sed -i -e "/^QMAKE_PRL_LIBS/d" ${prl_file}
+  fi
+done
+popd
 
-# Fix all buildroot paths
-find %{buildroot}/%{_qt5_libdir} -type f -name '*prl' -exec perl -pi -e "s, -L%{_builddir}/\S+,,g" {} \;
-find %{buildroot}/%{_qt5_libdir} -type f -name '*prl' -exec sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" {} \;
-find %{buildroot}/%{_qt5_libdir} -type f -name '*la' -print -exec perl -pi -e "s, -L%{_builddir}/?\S+,,g" {} \;
+install -d %{buildroot}/%{_qt5_docdir}
 
 # .la and .a files, die, die, die.
 rm -f %{buildroot}%{_qt5_libdir}/lib*.la
