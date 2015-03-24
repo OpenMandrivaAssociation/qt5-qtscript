@@ -1,10 +1,6 @@
-%define api 5
+%define api %(echo %{version} |cut -d. -f1)
 %define major %api
-
-%define qtminor 4
-%define qtsubminor 1
-
-%define qtversion %{api}.%{qtminor}.%{qtsubminor}
+%define beta alpha
 
 %define qtscript %mklibname qt%{api}script %{major}
 %define qtscriptd %mklibname qt%{api}script -d
@@ -14,17 +10,22 @@
 %define qtscripttoolsd %mklibname qt%{api}scripttools -d
 %define qtscripttools_p_d %mklibname qt%{api}scripttools-private -d
 
-%define qttarballdir qtscript-opensource-src-%{qtversion}
+%define qttarballdir qtscript-opensource-src-%{version}%{?beta:-%{beta}}
 %define _qt5_prefix %{_libdir}/qt%{api}
 
 Name:		qt5-qtscript
-Version:	%{qtversion}
+Version:	5.5.0
+%if "%{beta}" != ""
+Release:	0.%{beta}.1
+Source0:	http://download.qt.io/development_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
+%else
 Release:	1
+Source0:	http://download.qt.io/official_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+%endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt-project.org
-Source0:	http://download.qt-project.org/official_releases/qt/%{api}.%{qtminor}/%{version}/submodules/%{qttarballdir}.tar.xz
 BuildRequires:	qt5-qtbase-devel
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Widgets)
@@ -64,7 +65,7 @@ Devel files needed to build apps based on QtScriptTools.
 %{_qt5_libdir}/libQt5ScriptTools.so
 %{_qt5_libdir}/pkgconfig/Qt5ScriptTools.pc
 %{_qt5_includedir}/QtScriptTools
-%exclude %{_qt5_includedir}/QtScriptTools/%qtversion
+%exclude %{_qt5_includedir}/QtScriptTools/%version
 %{_qt5_libdir}/cmake/Qt5ScriptTools
 %{_qt5_prefix}/mkspecs/modules/qt_lib_scripttools.pri
 
@@ -80,7 +81,7 @@ Provides:	qt5-qtscripttools-private-devel = %version
 Devel files needed to build apps based on QtScriptTools.
 
 %files -n	%{qtscripttools_p_d}
-%{_qt5_includedir}/QtScriptTools/%qtversion
+%{_qt5_includedir}/QtScriptTools/%version
 %{_qt5_prefix}/mkspecs/modules/qt_lib_scripttools_private.pri
 
 #------------------------------------------------------------------------------
@@ -165,10 +166,10 @@ Provides:	qt5-qtscript-private-devel = %version
 Devel files needed to build apps based on QtScript.
 
 %files -n %{qtscript_p_d}
-%dir %{_qt5_includedir}/QtScript/%qtversion
-%dir %{_qt5_includedir}/QtScript/%qtversion/QtScript
-%dir %{_qt5_includedir}/QtScript/%qtversion/QtScript/private
-%{_qt5_includedir}/QtScript/%qtversion/QtScript/private/*.h
+%dir %{_qt5_includedir}/QtScript/%version
+%dir %{_qt5_includedir}/QtScript/%version/QtScript
+%dir %{_qt5_includedir}/QtScript/%version/QtScript/private
+%{_qt5_includedir}/QtScript/%version/QtScript/private/*.h
 %{_qt5_prefix}/mkspecs/modules/qt_lib_script_private.pri
 
 
