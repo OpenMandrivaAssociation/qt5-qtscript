@@ -11,6 +11,7 @@
 %define qtscripttools_p_d %mklibname qt%{api}scripttools-private -d
 
 %define _qt5_prefix %{_libdir}/qt%{api}
+%define _disable_lto 1
 
 Name:		qt5-qtscript
 Version:	5.5.0
