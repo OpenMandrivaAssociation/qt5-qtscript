@@ -14,7 +14,7 @@
 %define _disable_lto 1
 
 Name:		qt5-qtscript
-Version:	5.5.0
+Version:	5.5.1
 %if "%{beta}" != ""
 Release:	1.%{beta}.1
 %define qttarballdir qtscript-opensource-src-%{version}-%{beta}
@@ -28,7 +28,7 @@ Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
-BuildRequires:	qt5-qtbase-devel
+BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Widgets)
 
