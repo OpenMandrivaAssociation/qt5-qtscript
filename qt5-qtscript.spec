@@ -31,6 +31,8 @@ URL:		http://www.qt.io
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Widgets)
+# For the Provides: generator
+BuildRequires:	cmake >= 3.11.0-1
 
 %description
 The QtScript module provides classes for making Qt applications
