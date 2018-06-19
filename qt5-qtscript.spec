@@ -14,7 +14,7 @@
 %define _disable_lto 1
 
 Name:		qt5-qtscript
-Version:	5.11.0
+Version:	5.11.1
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtscript-everywhere-src-%{version}-%{beta}
