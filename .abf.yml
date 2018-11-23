@@ -1,4 +1,5 @@
 removed_sources:
   qtscript-opensource-src-5.9.2.tar.xz: ac6ad8dc3727194b7d339e9f3283692026e79066
-sources:
   qtscript-opensource-src-5.9.6.tar.xz: a56e2e076e210ba96f56f0bdf6a3f5a0a45c7860
+sources:
+  qtscript-opensource-src-5.9.7.tar.xz: 19bdb5e2e14d2ce335c0289d0423152eec682ddb
