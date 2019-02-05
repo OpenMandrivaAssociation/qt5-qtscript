@@ -14,7 +14,7 @@
 %define _disable_lto 1
 
 Name:		qt5-qtscript
-Version:	5.12.0
+Version:	5.12.1
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtscript-everywhere-src-%{version}-%{beta}
@@ -151,6 +151,7 @@ Devel files needed to build apps based on QtScript.
 %{_qt5_includedir}/QtScript/qscriptstring.h
 %{_qt5_includedir}/QtScript/qscriptvalue.h
 %{_qt5_includedir}/QtScript/qscriptvalueiterator.h
+%{_qt5_includedir}/QtScript/qtscript-config.h
 %{_qt5_includedir}/QtScript/qtscriptglobal.h
 %{_qt5_includedir}/QtScript/qtscriptversion.h
 
