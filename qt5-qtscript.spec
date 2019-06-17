@@ -1,6 +1,6 @@
 %define api %(echo %{version} |cut -d. -f1)
 %define major %api
-%define beta %{nil}
+%define beta rc2
 
 %define qtscript %mklibname qt%{api}script %{major}
 %define qtscriptd %mklibname qt%{api}script -d
@@ -14,7 +14,7 @@
 %define _disable_lto 1
 
 Name:		qt5-qtscript
-Version:	5.12.3
+Version:	5.13.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtscript-everywhere-src-%{version}-%{beta}
