@@ -1,0 +1,12 @@
+diff -Naur a/src/3rdparty/javascriptcore/JavaScriptCore/jit/JITStubs.h b/src/3rdparty/javascriptcore/JavaScriptCore/jit/JITStubs.h
+--- a/src/3rdparty/javascriptcore/JavaScriptCore/jit/JITStubs.h	2020-10-27 08:02:11.000000000 +0000
++++ b/src/3rdparty/javascriptcore/JavaScriptCore/jit/JITStubs.h	2021-02-08 15:59:07.527000000 +0000
+@@ -316,7 +316,7 @@
+     EncodedJSValue JIT_STUB cti_op_to_primitive(STUB_ARGS_DECLARATION);
+     EncodedJSValue JIT_STUB cti_op_typeof(STUB_ARGS_DECLARATION);
+     EncodedJSValue JIT_STUB cti_op_urshift(STUB_ARGS_DECLARATION);
+-    EncodedJSValue JIT_STUB cti_vm_throw(STUB_ARGS_DECLARATION);
++    EncodedJSValue JIT_STUB cti_vm_throw(STUB_ARGS_DECLARATION) __attribute__((used));
+     EncodedJSValue JIT_STUB cti_to_object(STUB_ARGS_DECLARATION);
+     JSObject* JIT_STUB cti_op_construct_JSConstruct(STUB_ARGS_DECLARATION);
+     JSObject* JIT_STUB cti_op_new_array(STUB_ARGS_DECLARATION);
