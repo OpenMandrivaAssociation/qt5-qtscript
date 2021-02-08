@@ -14,9 +14,6 @@
 
 %global optflags %{optflags} -O3
 
-# (tpg) too much asm code
-%define _disable_lto 1
-
 Name:		qt5-qtscript
 Version:	5.15.2
 %if "%{beta}" != ""
@@ -24,7 +21,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtscript-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	3
+Release:	4
 %define qttarballdir qtscript-everywhere-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -32,6 +29,8 @@ Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
+# (tpg) https://codereview.qt-project.org/c/qt/qtscript/+/308863
+Patch0:		qtscript-everywhere-src-5.15.2-QTBUG-42989.patch
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Widgets)
