@@ -15,15 +15,15 @@
 %global optflags %{optflags} -O3
 
 Name:		qt5-qtscript
-Version:	5.15.2
+Version:	5.15.3
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtscript-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	4
-%define qttarballdir qtscript-everywhere-src-%{version}
-Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+Release:	1
+%define qttarballdir qtscript-everywhere-src-5.15.2
+Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/5.15.2/submodules/%{qttarballdir}.tar.xz
 %endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
@@ -31,6 +31,9 @@ License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 # (tpg) https://codereview.qt-project.org/c/qt/qtscript/+/308863
 Patch0:		qtscript-everywhere-src-5.15.2-QTBUG-42989.patch
+# Patches from KDE
+Patch1000:	0001-Bump-version.patch
+Patch1002:	0003-Add-product_dependencies.yaml-to-build-against-LTS-5.patch
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Widgets)
@@ -183,6 +186,7 @@ Devel files needed to build apps based on QtScript.
 
 %prep
 %autosetup -n %qttarballdir -p1
+%{_qt5_prefix}/bin/syncqt.pl -version %{version}
 
 %build
 %qmake_qt5

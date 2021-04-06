@@ -1,0 +1,25 @@
+From 849634377122a2beefbd5e6ed9f954cb804dc6fe Mon Sep 17 00:00:00 2001
+From: Heikki Halmet <heikki.halmet@qt.io>
+Date: Mon, 15 Mar 2021 14:19:39 +0200
+Subject: [PATCH 3/4] Add product_dependencies.yaml to build against LTS 5.15
+
+Change-Id: I9a4673a7222ed61d1255aff57cbf73e704a40a24
+Reviewed-by: Qt CI Bot <qt_ci_bot@qt-project.org>
+Reviewed-by: Jani Heikkinen <jani.heikkinen@qt.io>
+---
+ coin/product_dependencies.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
+ create mode 100644 coin/product_dependencies.yaml
+
+diff --git a/coin/product_dependencies.yaml b/coin/product_dependencies.yaml
+new file mode 100644
+index 0000000..3b8e901
+--- /dev/null
++++ b/coin/product_dependencies.yaml
+@@ -0,0 +1,3 @@
++dependencies:
++  ../tqtc-qt5.git:
++    ref: "tqtc/lts-5.15"
+-- 
+2.31.1
+
