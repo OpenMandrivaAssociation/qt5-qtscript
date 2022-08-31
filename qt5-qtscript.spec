@@ -12,6 +12,9 @@
 
 %define _qt5_prefix %{_libdir}/qt%{api}
 
+# (tpg) too much asm code
+%define _disable_lto 1
+
 %global optflags %{optflags} -O3
 
 Name:		qt5-qtscript
@@ -21,7 +24,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtscript-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtscript-everywhere-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -30,7 +33,8 @@ Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 # (tpg) https://codereview.qt-project.org/c/qt/qtscript/+/308863
-Patch0:		qtscript-everywhere-src-5.15.2-QTBUG-42989.patch
+# (tpg) 2022-08-31 seems like this patch does not help at all - disable LTO completetly for now
+# Patch0:		qtscript-everywhere-src-5.15.2-QTBUG-42989.patch
 # Patches from KDE
 # [currently only seem to pointlessly bump the version]
 BuildRequires:	qmake5 = %{version}
@@ -119,7 +123,7 @@ Requires:	qt5-qtbase-devel = %{version}
 %description -n %{qtscriptd}
 Devel files needed to build apps based on QtScript.
 
-%files -n	%{qtscriptd}
+%files -n %{qtscriptd}
 %{_qt5_libdir}/libQt5Script.prl
 %{_qt5_libdir}/libQt5Script.so
 %{_qt5_libdir}/pkgconfig/Qt5Script.pc
@@ -159,7 +163,6 @@ Devel files needed to build apps based on QtScript.
 %{_qt5_includedir}/QtScript/qtscript-config.h
 %{_qt5_includedir}/QtScript/qtscriptglobal.h
 %{_qt5_includedir}/QtScript/qtscriptversion.h
-
 %{_qt5_libdir}/cmake/Qt5Script
 %{_qt5_prefix}/mkspecs/modules/qt_lib_script.pri
 %{_qt5_exampledir}/script
