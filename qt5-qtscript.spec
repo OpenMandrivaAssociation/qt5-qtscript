@@ -18,7 +18,7 @@
 %global optflags %{optflags} -O3
 
 Name:		qt5-qtscript
-Version:	5.15.7
+Version:	5.15.8
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtscript-everywhere-src-%{version}-%{beta}
@@ -36,7 +36,7 @@ URL:		http://www.qt.io
 # (tpg) 2022-08-31 seems like this patch does not help at all - disable LTO completetly for now
 # Patch0:		qtscript-everywhere-src-5.15.2-QTBUG-42989.patch
 # Patches from KDE
-# [currently only seem to pointlessly bump the version]
+# [currently no patches added]
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Widgets)
