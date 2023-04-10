@@ -13,18 +13,18 @@
 %define _qt5_prefix %{_libdir}/qt%{api}
 
 # (tpg) too much asm code
-%define _disable_lto 1
+#define _disable_lto 1
 
 %global optflags %{optflags} -O3
 
 Name:		qt5-qtscript
-Version:	5.15.8
+Version:	5.15.9
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtscript-everywhere-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	2
+Release:	1
 %define qttarballdir qtscript-everywhere-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
