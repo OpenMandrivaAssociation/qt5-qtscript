@@ -15,7 +15,7 @@
 %global optflags %{optflags} -O3
 
 Name:		qt5-qtscript
-Version:	5.15.12
+Version:	5.15.14
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtscript-everywhere-src-%{version}-%{beta}
