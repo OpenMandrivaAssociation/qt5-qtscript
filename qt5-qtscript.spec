@@ -28,7 +28,7 @@ Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
-URL:		http://www.qt.io
+URL:		https://www.qt.io
 # (tpg) https://codereview.qt-project.org/c/qt/qtscript/+/308863
 # (tpg) 2022-08-31 seems like this patch does not help at all - disable LTO completetly for now
 # Patch0:		qtscript-everywhere-src-5.15.2-QTBUG-42989.patch
