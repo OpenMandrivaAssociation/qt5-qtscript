@@ -15,7 +15,7 @@
 %global optflags %{optflags} -O3
 
 Name:		qt5-qtscript
-Version:	5.15.18
+Version:	5.15.19
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtscript-everywhere-src-%{version}-%{beta}
@@ -23,7 +23,7 @@ Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d.
 %else
 Release:	1
 %define qttarballdir qtscript-everywhere-opensource-src-%{version}
-Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+Source0:	http://download.qt.io/archive/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
@@ -37,6 +37,7 @@ URL:		https://www.qt.io
 BuildRequires:	qmake5 = %{version}
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Widgets)
+BuildRequires:	make
 # For the Provides: generator
 BuildRequires:	cmake >= 3.11.0-1
 
